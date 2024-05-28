@@ -226,11 +226,11 @@ def predict(
     if verbose:
         print(f"Best hyperparameters, {best_hyperparameters}")
 
-    model = torch.load(model_save_path)
+    model = torch.load(model_save_path, map_location ='cpu')
     model.to(config.device).eval()
 
     if webcam_mode:
-        cap = cv2.VideoCapture("/dev/video0")
+        cap = cv2.VideoCapture(0)
         while True:
             init_time = time.time()
             ret, frame = cap.read()
@@ -249,20 +249,3 @@ def predict(
             cv2.waitKey(1)
 
         return None
-    else:
-        if type(image) == str:
-            image = cv2.imread(image)
-            image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-
-        result = _get_prediction(best_hp=best_hyperparameters, img=image, model=model, imshow=imshow, video_mode=video_mode, verbose=verbose, grad_cam=grad_cam)
-
-        if verbose:
-            print("\n\n\nResults:")
-            for res in result:
-                # check if numpy
-                if type(res) == np.ndarray:
-                    print(res.shape)
-                else:
-                    print(res)
-
-        return result
