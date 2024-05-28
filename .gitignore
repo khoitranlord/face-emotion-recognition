@@ -1,0 +1,13 @@
+venv/
+
+source/whisper/.pytest_cache
+source/whisper/.ipynb_checkpoints
+
+source/whisper/thumbs.db
+source/whisper/.DS_Store
+source/whisper/.idea
+
+source/whisper/__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info
